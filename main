@@ -1,0 +1,16 @@
+import requests
+from bs4 import BeautifulSoup
+
+
+#you can open bbc.com/weather and select any country or city and paste the link here to get the concept
+
+
+URL = "https://www.bbc.com/weather/360630"
+r = requests.get(URL)
+
+soup = BeautifulSoup(r.content,'html5lib')
+cityname = soup.find('h1', attrs= {'id':'wr-location-name-id'})
+citynamemodified = cityname.text.split("-")
+tempgrade = soup.find('span', attrs = {'class':'wr-value--temperature--c'})
+tempdesc = soup.find('div', attrs={'class':'wr-day__weather-type-description wr-js-day-content-weather-type-description wr-day__content__weather-type-description--opaque'})
+print("The weather today in " + citynamemodified[0] + "is " + (tempgrade.text) + " Celesius , " + (tempdesc.text))
